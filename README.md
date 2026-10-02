@@ -4,7 +4,7 @@ Create a test Virtual Server for learning purposes
 
 Guide: [PDF Checklist](https://github.com/MajoNeko/VServer/blob/main/Docs/Git_VServer_Checkliste.pdf)
 
-In this walkthrough you will learn how to setup SSH keys on a virtual server, disable password authentication in favour of using SSH authentication, and installing and configuring a web server.
+In this walkthrough you will learn how to setup SSH keys on a virtual server, disable password authentication in favour of using SSH authentication, installing and configuring a web server and setting up a Git account with username, email and SSH key on your server.
 
 # Table of Contents
 
@@ -17,8 +17,11 @@ In this walkthrough you will learn how to setup SSH keys on a virtual server, di
 2. [**Disable Password Logins**](#Disable-Password-logins)
    - Disable password logins for secure SSH authentication 
 
-3. [**Setup-Nginx**](#Setup-Nginx)
+3. [**Setup Nginx**](#Setup-Nginx)
    - Install and Configure Nginx
+
+4. [**Setup Git**](#Setup-Git)
+   - Install and Configure Git
 
 
 ## Setup and copy SSH keys
@@ -30,7 +33,9 @@ ssh-keygen -t ed25519 -f C:/Users/user-directory/.ssh/id_ed25519_VServer -C "key
 ```
 > [!Note]
 > -t ed25519 : This will generate a new SSH key pair using Ed25519 key type (recommended as it is faster, shorter and has better security properties).
+
 > -f ~/.ssh/id_ed25519_VServer : Specifies where the key pair should be generated (filename, usefull for organization purposes and for multiple key pairs)
+
 > -C "key name comment" : provides a comment for the key pair
 
 ### Step 2 : Verify your SSH key pairs 
@@ -171,6 +176,41 @@ You can now see the new alternative HTML start page by entering the IP address w
 ```bash
     http://ip-address:8081/
 ```
+## Setup Git
+
+### Step 1 - Install Git
+Install Git using the following command:
+```bash
+sudo apt install git -y
+```
+
+### Step 2 - Setup User setup
+Setup your username using the following command:
+```bash
+git config --global user.name "User Name"
+```
+And you email:
+```bash
+git config --global user.email "user@email.com"
+```
+> [!Note]
+> -y (yes) confirms the installation
+
+### Step 2 - Generate SSH key for Git
+Generate an SSH key as previously described in [**Setup and copy SSH keys - Step 1**](#Step-1-Generate-an-SSH-key-pair)
+
+### Step 3 - Copy your public key
+
+Open your public key using the cat editor:
+```bash
+cat /c/Users/UserName/.ssh/your-key-name.pub
+```
+and copy the key information.
+
+### Step 4 - Add your key to Git
+
+Go to your github profile and in the settings, clicks on SSH and GPG keys. Select New SSH key. Give it a title, such as "Virtual Server github key" and paste the key into the key field. Click on Add SSH key to complete the setup.
+
 
 ## Conclusion
 
@@ -180,4 +220,5 @@ You can now see the new alternative HTML start page by entering the IP address w
     - Disable password authentication for a more secure login process using SSH keys
     - Install, configure, and manage an Nginx web server
     - Using custom web pages on your server
+    - Setting up your username and email as well as an SSH key for Git and Git hub
 #### Your server is now ready to be used for whatever you can imagine, be it hosting websites or deploying applications or just tinkering around to see what else you can achieve.
